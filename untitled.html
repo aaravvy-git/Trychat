@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat App</title>
+  <style>
+    #chatbox {
+      width: 400px;
+      height: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      overflow-y: scroll;
+    }
+
+    #message {
+      width: 300px;
+    }
+  </style>
+  <script>
+    function sendMessage() {
+      var username = document.getElementById("username").value;
+      var message = document.getElementById("message").value;
+      var chatbox = document.getElementById("chatbox");
+
+      var messageElement = document.createElement("p");
+      messageElement.innerHTML = "<strong>" + username + ":</strong> " + message;
+      chatbox.appendChild(messageElement);
+
+      document.getElementById("message").value = "";
+    }
+  </script>
+</head>
+<body>
+  <div id="chatbox"></div>
+  <input type="text" id="username" placeholder="Enter your username">
+  <input type="text" id="message" placeholder="Enter your message">
+  <button onclick="sendMessage()">Send</button>
+</body>
+</html>
