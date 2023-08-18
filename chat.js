@@ -1,12 +1,12 @@
 // Replace the following configuration with your own Firebase project details
 var firebaseConfig = {
-  apiKey: "AIzaSyAdoKFG0lCLpG5uL7yY2ucb9Rcsfy3DZv8",
-  authDomain: "my-first-project-4daee.firebaseapp.com",
-  projectId: "my-first-project-4daee",
-  storageBucket: "my-first-project-4daee.appspot.com",
-  messagingSenderId: "71109801712",
-  appId: "1:71109801712:web:654ef77908511ee9497435",
-  measurementId: "G-CQS2S1B598"
+  apiKey: "AIzaSyBAWt0_iZAZijVi1rrKOUjMGYHtyw9HQ64",
+  authDomain: "aaravchat-44e73.firebaseapp.com",
+  projectId: "aaravchat-44e73",
+  storageBucket: "aaravchat-44e73.appspot.com",
+  messagingSenderId: "234190306046",
+  appId: "1:234190306046:web:dcc3e28dbc134dca1003af",
+  measurementId: "G-3GB9TJSLT7"
 };
 
 // Initialize Firebase
