@@ -1,23 +1,26 @@
 body {
   background-color: #36393F;
-  color: #fff;
+  color: #DCDDDE;
   font-family: 'Whitney', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   color: #8E9297;
 }
 
 .chat-container {
-  height: 80vh; 
-  width: 100vw;
+  flex: 1;
   overflow-y: scroll;
-  border: 1px solid #202225;
+  border-bottom: 1px solid #202225;
   padding: 10px;
   background-color: #2F3136;
-  border-radius: 8px;
 }
 
 .message {
@@ -31,7 +34,6 @@ h1 {
 
 .message-content {
   margin-left: 5px;
-  color: #DCDDDE;
 }
 
 .spoiler {
@@ -40,30 +42,26 @@ h1 {
 }
 
 .input-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #36393F;
+  width: 100%;
   display: flex;
-  margin-top: 20px;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #202225;
+  background-color: #36393F;
 }
 
 input[type="text"] {
-  flex: 1;
+  width: 90%;
   padding: 10px;
   border: none;
   border-radius: 24px;
   font-size: 16px;
   background-color: #40444B;
   color: #DCDDDE;
-  border: 1px solid #202225;
-  margin: 5px 0;
 }
 
 button {
   padding: 10px 20px;
-  margin-left: 10px;
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -80,29 +78,9 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
-}
-
-.username-input {
   padding: 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: #40444B;
-  color: #DCDDDE;
-  border: 1px solid #202225;
 }
 
-.username-submit {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: #7289DA;
-  color: #fff;
-  cursor: pointer;
-}
-
-.username-submit:hover {
-  background-color: #5865F2;
+.username-input, .username-submit {
+  margin: 5px;
 }
