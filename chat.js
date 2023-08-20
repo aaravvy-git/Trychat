@@ -1,4 +1,4 @@
-// Replace the following configuration with your own Firebase project details
+// Your Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyBAWt0_iZAZijVi1rrKOUjMGYHtyw9HQ64",
   authDomain: "aaravchat-44e73.firebaseapp.com",
@@ -59,9 +59,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var contentElement = document.createElement("span");
     contentElement.classList.add("message-content");
-    contentElement.innerText = message.content;
-    messageElement.appendChild(contentElement);
 
+    // Spoiler check and implementation
+    if (message.content.startsWith("||") && message.content.endsWith("||")) {
+        contentElement.classList.add("spoiler");
+        contentElement.innerText = "Click to reveal spoiler";
+        contentElement.setAttribute("data-spoiler-content", message.content.slice(2, -2));
+        contentElement.onclick = function() {
+            this.innerText = this.getAttribute("data-spoiler-content");
+            this.classList.remove("spoiler");
+        };
+    } else {
+        contentElement.innerText = message.content;
+    }
+
+    messageElement.appendChild(contentElement);
     chatContainer.appendChild(messageElement);
     chatContainer.scrollTop = chatContainer.scrollHeight;
   });
