@@ -21,11 +21,17 @@ document.addEventListener("DOMContentLoaded", function() {
   var usernameSubmit = document.getElementById("usernameSubmit");
   var username = null;
 
+  // Initially, hide the chat and input containers
+  chatContainer.style.display = 'none';
+  document.querySelector(".input-container").style.display = 'none';
+
   function setUsername() {
     var inputUsername = usernameInput.value.trim();
     if (inputUsername !== "") {
       username = inputUsername;
-      usernameContainer.style.display = "none";
+      usernameContainer.style.display = "none"; // Hide username input
+      chatContainer.style.display = 'block'; // Show chat container
+      document.querySelector(".input-container").style.display = 'flex'; // Show input container
     }
   }
 
