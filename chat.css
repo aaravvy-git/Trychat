@@ -36,9 +36,10 @@ h1 {
   margin-left: 5px;
 }
 
-.spoiler {
-  background-color: #2F3136;
-  cursor: pointer;
+.spoiler-text {
+    background-color: black;
+    color: black;
+    cursor: pointer;
 }
 
 .input-container {
@@ -79,8 +80,4 @@ button:hover {
   align-items: center;
   justify-content: center;
   padding: 10px;
-}
-
-.username-input, .username-submit {
-  margin: 5px;
 }
