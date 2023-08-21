@@ -3,23 +3,20 @@
 <head>
   <title>Chat Room</title>
   <link rel="stylesheet" href="chat.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <h1>Chat Room</h1>
+
+  <div class="username-container" id="usernameContainer">
+    <input type="text" id="usernameInput" placeholder="Enter your username">
+    <button id="usernameSubmit">Submit</button>
+  </div>
 
   <div class="chat-container" id="chatContainer"></div>
 
   <div class="input-container">
     <input type="text" id="messageInput" placeholder="Type your message...">
     <button id="sendButton">Send</button>
-  </div>
-
-  <div class="username-container" id="usernameContainer">
-    <input type="text" id="usernameInput" placeholder="Enter your username">
-    <input type="password" id="passwordInput" placeholder="Enter your password">
-    <button id="usernameSubmit">Join Chat</button>
-    <p><a href="signup.html" style="color: cyan;">New here? Signup</a></p>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
