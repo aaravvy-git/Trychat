@@ -1,26 +1,19 @@
 body {
-  background-color: #36393F;
-  color: #DCDDDE;
-  font-family: 'Whitney', 'Segoe UI', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 10px;
-  color: #8E9297;
+  margin-bottom: 30px;
 }
 
-.chat-container, .signup-container {
-  flex: 1;
+.chat-container {
+  height: 300px;
   overflow-y: scroll;
-  border-bottom: 1px solid #202225;
+  border: 1px solid #aaa;
   padding: 10px;
-  background-color: #2F3136;
 }
 
 .message {
@@ -29,7 +22,6 @@ h1 {
 
 .message-username {
   font-weight: bold;
-  color: #7289DA;
 }
 
 .message-content {
@@ -37,51 +29,38 @@ h1 {
 }
 
 .input-container {
-  width: 100%;
   display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-top: 1px solid #202225;
-  background-color: #36393F;
+  margin-top: 20px;
 }
 
-input[type="text"], input[type="password"] {
-  width: 90%;
+input[type="text"] {
+  flex: 1;
   padding: 10px;
   border: none;
-  border-radius: 24px;
+  border-radius: 4px;
   font-size: 16px;
-  background-color: #40444B;
-  color: #DCDDDE;
+  background-color: #222;
+  color: #fff;
 }
 
 button {
   padding: 10px 20px;
+  margin-left: 10px;
   border: none;
   border-radius: 4px;
   font-size: 16px;
-  background-color: #7289DA;
+  background-color: #007bff;
   color: #fff;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #5865F2;
+  background-color: #0056b3;
 }
 
 .username-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-}
-
-/* Styles for signup page */
-.signup-container {
-  width: 300px;
-  margin: 50px auto;
-  background-color: #2C2F33;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
 }
