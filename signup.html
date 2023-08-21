@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup</title>
   <link rel="stylesheet" href="chat.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="signup-container">
-    <h1>Signup</h1>
-    <input type="text" id="signupUsername" placeholder="Username">
-    <input type="password" id="signupPassword" placeholder="Password">
-    <button id="signupButton">Signup</button>
+  <h1>Signup</h1>
+
+  <div class="username-container" id="signupContainer">
+    <input type="text" id="signupUsername" placeholder="Choose your username">
+    <input type="password" id="signupPassword" placeholder="Choose your password">
+    <button id="signupSubmit">Signup</button>
+    <p><a href="chat.html" style="color: cyan;">Already have an account? Login</a></p>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
