@@ -12,6 +12,10 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Audio effects initialization
+var sendAudio = new Audio('s.mp3');
+var receiveAudio = new Audio('g.mp3');
+
 document.addEventListener("DOMContentLoaded", function() {
   var messageInput = document.getElementById("messageInput");
   var chatContainer = document.getElementById("chatContainer");
@@ -29,9 +33,9 @@ document.addEventListener("DOMContentLoaded", function() {
     var inputUsername = usernameInput.value.trim();
     if (inputUsername !== "") {
       username = inputUsername;
-      usernameContainer.style.display = "none"; // Hide username input
-      chatContainer.style.display = 'block'; // Show chat container
-      document.querySelector(".input-container").style.display = 'flex'; // Show input container
+      usernameContainer.style.display = "none";
+      chatContainer.style.display = 'block';
+      document.querySelector(".input-container").style.display = 'flex';
     }
   }
 
@@ -50,8 +54,14 @@ document.addEventListener("DOMContentLoaded", function() {
         content: messageContent
       });
       messageInput.value = "";
+      sendAudio.play();
     }
   });
+
+  // Function to process spoilers within a message
+  function processSpoilers(message) {
+    return message.replace(/\|\|([^|]+)\|\|/g, '<span class="spoiler-text" onclick="revealSpoiler(this)">$1</span>');
+  }
 
   firebase.database().ref("messages").on("child_added", function(snapshot) {
     var message = snapshot.val();
@@ -65,24 +75,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var contentElement = document.createElement("span");
     contentElement.classList.add("message-content");
-
-    // Spoiler check and implementation
-    if (message.content.startsWith("||") && message.content.endsWith("||")) {
-        contentElement.classList.add("spoiler");
-        contentElement.innerText = "Click to reveal spoiler";
-        contentElement.setAttribute("data-spoiler-content", message.content.slice(2, -2));
-        contentElement.onclick = function() {
-            this.innerText = this.getAttribute("data-spoiler-content");
-            this.classList.remove("spoiler");
-        };
-    } else {
-        contentElement.innerText = message.content;
-    }
-
+    contentElement.innerHTML = processSpoilers(message.content);
     messageElement.appendChild(contentElement);
+
     chatContainer.appendChild(messageElement);
     chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    if (message.username !== username) {
+        receiveAudio.play();
+    }
   });
 
   usernameContainer.style.display = "flex";
 });
+
+// Function to reveal spoiler text
+function revealSpoiler(element) {
+    element.style.background = 'none';
+    element.style.color = '#DCDDDE';
+                          }
