@@ -10,16 +10,29 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-document.getElementById("signupButton").addEventListener("click", function() {
-  var username = document.getElementById("signupUsername").value.trim();
-  var password = document.getElementById("signupPassword").value.trim();
+document.addEventListener("DOMContentLoaded", function() {
+  var signupUsername = document.getElementById("signupUsername");
+  var signupPassword = document.getElementById("signupPassword");
+  var signupSubmit = document.getElementById("signupSubmit");
 
-  if (username && password) {
-    firebase.database().ref("users/" + username).set({
-      password: password
-    });
-    alert("Signup successful");
-  } else {
-    alert("Please enter a valid username and password.");
-  }
+  signupSubmit.addEventListener("click", function() {
+    var username = signupUsername.value.trim();
+    var password = signupPassword.value.trim();
+
+    if (username !== "" && password !== "") {
+      firebase.database().ref("users/" + username).once('value').then(function(snapshot) {
+        if(snapshot.exists()) {
+          alert("Username already taken. Please choose another.");
+        } else {
+          firebase.database().ref("users/" + username).set({
+            password: password
+          });
+          alert("Signup successful!");
+          window.location.href = "chat.html";
+        }
+      });
+    } else {
+      alert("Please fill out both fields.");
+    }
+  });
 });
