@@ -8,6 +8,35 @@ body {
   display: flex;
   flex-direction: column;
 }
+#fileInput {
+  margin-right: 10px;
+  color: transparent;
+  width: 25px;
+  height: 25px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#fileInput:hover {
+  opacity: 0.8;
+}
+.message img {
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
+  margin-top: 10px;
+  border-radius: 8px; /* Optional, for rounded corners on images */
+}
+.message a {
+  color: #7289DA;
+  text-decoration: none;
+  margin-top: 5px;
+  display: block;
+}
+
+.message a:hover {
+  text-decoration: underline;
+}
 
 h1 {
   text-align: center;
