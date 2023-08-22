@@ -18,6 +18,7 @@ var receiveAudio = new Audio('g.mp3');
 
 document.addEventListener("DOMContentLoaded", function() {
   var messageInput = document.getElementById("messageInput");
+  var fileInput = document.getElementById("fileInput");
   var chatContainer = document.getElementById("chatContainer");
   var sendButton = document.getElementById("sendButton");
   var usernameContainer = document.getElementById("usernameContainer");
@@ -48,7 +49,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
   sendButton.addEventListener("click", function() {
     var messageContent = messageInput.value.trim();
-    if (messageContent !== "") {
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const storageRef = firebase.storage().ref('uploads/' + new Date().getTime() + "-" + file.name);
+      const uploadTask = storageRef.put(file);
+      uploadTask.on('state_changed', null, null, () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          firebase.database().ref("messages").push().set({
+            username: username,
+            content: messageContent,
+            fileUrl: downloadURL,
+            fileType: file.type
+          });
+          messageInput.value = "";
+          fileInput.value = "";  // Reset file input
+          sendAudio.play();
+        });
+      });
+    } else if (messageContent !== "") {
       firebase.database().ref("messages").push().set({
         username: username,
         content: messageContent
@@ -78,6 +96,21 @@ document.addEventListener("DOMContentLoaded", function() {
     contentElement.innerHTML = processSpoilers(message.content);
     messageElement.appendChild(contentElement);
 
+    if (message.fileUrl) {
+      if (message.fileType.startsWith('image/')) {
+        const imageElement = document.createElement('img');
+        imageElement.src = message.fileUrl;
+        imageElement.style.maxWidth = "200px"; 
+        messageElement.appendChild(imageElement);
+      } else if (message.fileType === 'application/pdf') {
+        const fileLink = document.createElement('a');
+        fileLink.href = message.fileUrl;
+        fileLink.innerText = "View File";
+        fileLink.target = "_blank";
+        messageElement.appendChild(fileLink);
+      } 
+    }
+
     chatContainer.appendChild(messageElement);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
@@ -93,4 +126,4 @@ document.addEventListener("DOMContentLoaded", function() {
 function revealSpoiler(element) {
     element.style.background = 'none';
     element.style.color = '#DCDDDE';
-      }
+          }
