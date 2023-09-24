@@ -1,22 +1,141 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Room</title>
-  <link rel="stylesheet" href="chat_kindle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        body {
+            background-color: #36393F;
+            color: #DCDDDE;
+            font-family: 'Whitney', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-container {
+            flex: 1;
+            overflow-y: scroll;
+            border-bottom: 1px solid #202225;
+            padding: 10px;
+            background-color: #2F3136;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message-username {
+            font-weight: bold;
+            color: #7289DA;
+        }
+        .message-content {
+            margin-left: 5px;
+        }
+        .input-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-top: 1px solid #202225;
+            background-color: #36393F;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            border: none;
+            border-radius: 24px;
+            font-size: 16px;
+            background-color: #40444B;
+            color: #DCDDDE;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #7289DA;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #5865F2;
+        }
+    </style>
 </head>
 <body>
-  <h1>Chat Room</h1>
+    <h1>Chat Room</h1>
+    <div class="chat-container" id="chatContainer"></div>
+    <div class="input-container">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="sendButton">Send</button>
+    </div>
 
-  <div class="chat-container" id="chatContainer"></div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Your Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBAWt0_iZAZijVi1rrKOUjMGYHtyw9HQ64",
+            authDomain: "aaravchat-44e73.firebaseapp.com",
+            projectId: "aaravchat-44e73",
+            storageBucket: "aaravchat-44e73.appspot.com",
+            messagingSenderId: "234190306046",
+            appId: "1:234190306046:web:dcc3e28dbc134dca1003af",
+            measurementId: "G-3GB9TJSLT7"
+        };
 
-  <div class="input-container">
-    <input type="text" id="messageInput" placeholder="Type your message...">
-    <button id="sendButton">Send</button>
-  </div>
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script src="chat_kindle.js"></script>
+        var messageInput = document.getElementById("messageInput");
+        var chatContainer = document.getElementById("chatContainer");
+        var sendButton = document.getElementById("sendButton");
+
+        var username = "a Kindle user";
+
+        sendButton.onclick = function() {
+            var messageContent = messageInput.value.trim();
+            if (messageContent !== "") {
+                firebase.database().ref("messages").push({
+                    username: username,
+                    content: messageContent
+                });
+                messageInput.value = "";
+            }
+        };
+
+        firebase.database().ref("messages").on("child_added", function(snapshot) {
+            var message = snapshot.val();
+            var messageElement = document.createElement("div");
+            
+            messageElement.innerHTML = `<strong>${message.username}:</strong> ${message.content}`;
+            
+            // Handle images and download links for supported file types
+            if (message.fileUrl) {
+                if (message.fileType.startsWith('image/')) {
+                    const imageElement = document.createElement('img');
+                    imageElement.src = message.fileUrl;
+                    imageElement.style.maxWidth = "200px";
+                    messageElement.appendChild(imageElement);
+                } else if (message.fileType === 'application/epub+zip') {  // EPUB files
+                    const fileLink = document.createElement('a');
+                    fileLink.href = message.fileUrl;
+                    fileLink.innerText = "Download EPUB";
+                    fileLink.target = "_blank";
+                    messageElement.appendChild(fileLink);
+                } else if (message.fileType === 'text/plain') {  // TXT files
+                    const fileLink = document.createElement('a');
+                    fileLink.href = message.fileUrl;
+                    fileLink.innerText = "Download TXT";
+                    fileLink.target = "_blank";
+                    messageElement.appendChild(fileLink);
+                }
+            }
+
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        });
+    </script>
 </body>
 </html>
