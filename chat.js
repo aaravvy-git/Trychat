@@ -80,6 +80,25 @@ document.addEventListener("DOMContentLoaded", function() {
   function processSpoilers(message) {
     return message.replace(/\|\|([^|]+)\|\|/g, '<span class="spoiler-text" onclick="revealSpoiler(this)">$1</span>');
   }
+  
+  // Function to process message content and embed links
+  function processMessageContent(message) {
+    // Regular expressions to detect different types of links
+    const imageRegex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
+    const videoRegex = /\.(mp4|webm|ogg|mov)$/i;
+    const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i;
+    
+    // Replace image links with embedded images
+    message = message.replace(imageRegex, '<img src="$&" class="embedded-image" />');
+    
+    // Replace video links with embedded videos
+    message = message.replace(videoRegex, '<video src="$&" class="embedded-video" controls />');
+    
+    // Replace YouTube links with embedded YouTube videos
+    message = message.replace(youtubeRegex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+    
+    return message;
+  }
 
   firebase.database().ref("messages").on("child_added", function(snapshot) {
     var message = snapshot.val();
@@ -93,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var contentElement = document.createElement("span");
     contentElement.classList.add("message-content");
-    contentElement.innerHTML = processSpoilers(message.content);
+    contentElement.innerHTML = processSpoilers(processMessageContent(message.content));
     messageElement.appendChild(contentElement);
 
     if (message.fileUrl) {
@@ -126,4 +145,4 @@ document.addEventListener("DOMContentLoaded", function() {
 function revealSpoiler(element) {
     element.style.background = 'none';
     element.style.color = '#DCDDDE';
-          }
+                                                }
