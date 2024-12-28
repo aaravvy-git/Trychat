@@ -83,20 +83,23 @@ document.addEventListener("DOMContentLoaded", function() {
   
   // Function to process message content and embed links
   function processMessageContent(message) {
+    // Remove HTML tags
+    message = message.replace(/<\/?[^>]+(>|$)/g, "");
+
     // Regular expressions to detect different types of links
     const imageRegex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
     const videoRegex = /\.(mp4|webm|ogg|mov)$/i;
     const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i;
-    
+
     // Replace image links with embedded images
     message = message.replace(imageRegex, '<img src="$&" class="embedded-image" />');
-    
+
     // Replace video links with embedded videos
     message = message.replace(videoRegex, '<video src="$&" class="embedded-video" controls />');
-    
+
     // Replace YouTube links with embedded YouTube videos
     message = message.replace(youtubeRegex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
-    
+
     return message;
   }
 
