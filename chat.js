@@ -171,8 +171,8 @@ document.addEventListener("DOMContentLoaded", function () {
   chatContainer.style.display = 'none';
   if (inputContainer) inputContainer.style.display = 'none';
 
-  // keep username in localStorage so refresh keeps it
-  var username = localStorage.getItem('chat_username') || null;
+  // DO NOT get username from localStorage — always null on load
+  var username = null;
 
   function showChatAfterUsername() {
     usernameContainer.style.display = 'none';
@@ -184,18 +184,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var inputUsername = usernameInput ? usernameInput.value.trim() : "";
     if (inputUsername !== "") {
       username = inputUsername;
-      localStorage.setItem('chat_username', username);
+      // DO NOT save username to localStorage
+      // localStorage.setItem('chat_username', username);
       showChatAfterUsername();
     }
   }
 
-  // If username already present, show chat
+  // On load, username is always null — show username input form
   if (username) {
     if (usernameContainer) usernameContainer.style.display = 'none';
     chatContainer.style.display = 'block';
     if (inputContainer) inputContainer.style.display = 'flex';
   } else {
-    // show username container (if present)
     if (usernameContainer) usernameContainer.style.display = "flex";
   }
 
